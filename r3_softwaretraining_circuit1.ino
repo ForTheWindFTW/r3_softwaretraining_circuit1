@@ -16,7 +16,7 @@
  *       drive rotation
  * 
  * Stanley Chow
- * v1.0.0 2020/10/14
+ * v1.0.1 2020/10/14
  */
 
 #define DIP1 13
@@ -26,6 +26,8 @@
 #define POT A0
 #define POT_MIN 0
 #define POT_MAX 1023
+#define PWR_MIN 0
+#define PWR_MAX 255
 
 /**
  * Grouping the L293D motor driver inputs
@@ -37,6 +39,11 @@ int dip[4];
 int pot;
 
 void setup() {
+  /**
+   * For some reason, only pin 13 works properly when set to
+   * INPUT mode for dip switches, and all other pins (analog or
+   * digital) must be set to OUTPUT mode to function correctly
+   */
   pinMode(DIP1, INPUT);
   pinMode(DIP2, OUTPUT);
   pinMode(DIP3, OUTPUT);
@@ -48,10 +55,10 @@ void setup() {
 void loop() {
   readInputs();
   
-  int pwr = map(pot, POT_MIN, POT_MAX, 0, 255);
+  int pwr = map(pot, POT_MIN, POT_MAX, PWR_MIN, PWR_MAX);
   
   /* Note: !a && !b && ... can be simplified to !(a || b || ...)
-   * but is left as is to improve readability
+   * but is left as-is to improve readability
    */
   if(!dip[0] && !dip[1] && !dip[2] && !dip[3]) {
     driveForward(0);
@@ -65,6 +72,9 @@ void loop() {
     driveRotateCW(pwr);
   }
   
+  /**
+   * Loop updates at a rate of ~20Hz
+   */
   delay(50);
 }
 
