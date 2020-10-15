@@ -16,7 +16,7 @@
  *       drive rotation
  * 
  * Stanley Chow
- * v1.0.2 2020/10/14
+ * v1.1.0 2020/10/14
  */
 
 #define DIP1 13
@@ -39,15 +39,10 @@ int dip[4];
 int pot;
 
 void setup() {
-  /**
-   * For some reason, only pin 13 works properly when set to
-   * INPUT mode for dip switches, and all other pins (analog or
-   * digital) must be set to OUTPUT mode to function correctly
-   */
-  pinMode(DIP1, INPUT);
-  pinMode(DIP2, OUTPUT);
-  pinMode(DIP3, OUTPUT);
-  pinMode(DIP4, OUTPUT);
+  pinMode(DIP1, INPUT_PULLUP);
+  pinMode(DIP2, INPUT_PULLUP);
+  pinMode(DIP3, INPUT_PULLUP);
+  pinMode(DIP4, INPUT_PULLUP);
   
   pinMode(POT, INPUT);
   
@@ -55,6 +50,8 @@ void setup() {
   pinMode(MOTOR_L[1], OUTPUT);  
   pinMode(MOTOR_R[0], OUTPUT);  
   pinMode(MOTOR_R[1], OUTPUT);
+  
+  Serial.begin(9600);
 }
 
 void loop() {
