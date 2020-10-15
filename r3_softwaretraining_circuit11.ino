@@ -16,7 +16,7 @@
  *       drive rotation
  * 
  * Stanley Chow
- * v1.0.1 2020/10/14
+ * v1.0.2 2020/10/14
  */
 
 #define DIP1 13
@@ -50,6 +50,11 @@ void setup() {
   pinMode(DIP4, OUTPUT);
   
   pinMode(POT, INPUT);
+  
+  pinMode(MOTOR_L[0], OUTPUT);  
+  pinMode(MOTOR_L[1], OUTPUT);  
+  pinMode(MOTOR_R[0], OUTPUT);  
+  pinMode(MOTOR_R[1], OUTPUT);
 }
 
 void loop() {
